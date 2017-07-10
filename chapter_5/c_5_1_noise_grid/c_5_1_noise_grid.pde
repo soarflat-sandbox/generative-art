@@ -9,11 +9,14 @@ float xNoise = xStart;
 float yNoise = random(10);
 
 for (int y = 0; y <= height; y += 1) {
+    // シード値に0.01を加算
     yNoise += 0.01;
     // 各列の開始時点でxNoiseをリセット
     xNoise = xStart;
     for (int x = 0; x <= width; x += 1) {
+        // シード値に0.01を加算
         xNoise += 0.01;
+        // xとyのそれぞれの位置でnoise関数が返す値をアルファ値として利用する
         int alph = int(noise(xNoise, yNoise) * 255);
         stroke(0, alph);
         line(x, y, x + 1, y + 1);
