@@ -195,7 +195,7 @@ void drawPoint(float x, float y, float noiseFactor) {
 }
 ```
 
-`noiseFactor`の値を、回転、円のサイズ、色、アルファ値を決めるのに利用して描画をしている。
+`noiseFactor`の値を、座標の回転と円のサイズ、色、アルファ値を決めるのに利用して描画をしている。
 
 結果として以下のような2Dパーリンノイズが描画される。
 
