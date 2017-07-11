@@ -43,7 +43,7 @@ for (int y = 0; y <= height; y += 1) {
 
 上記のコードは1ピクセルずつごく短い線を描画しているものであり、300×300の正方形のピクセル上をループする。１ピクセル毎にシード値（乱数を生成するときの最初の設定値）に0.01を加算し、各列の開始時点でxのシード値を元の値に戻す。xとyのそれぞれの位置で`noise`関数が返す値は、各位置で描画する線のアルファ値として利用するため視覚化される。
 
-結果として以下のような2Dパーリンノイズが描画される。
+以下のような2Dパーリンノイズが描画される。
 
 <img src="../README_resources/chapter_5/c_5_1_noise_grid.jpg" width="303">
 
@@ -87,7 +87,7 @@ void drawPoint(float x, float y, float noiseFactor) {
 
 上記のコードは、グリッド毎の正方形の大きさをノイズの値として視覚化するもの。`drawPoint()`関数の`noiseFactor`は正方形の大きさを決めるために利用している。
 
-結果として以下のような2Dパーリンノイズが描画される。
+以下のような2Dパーリンノイズが描画される。
 
 <img src="../README_resources/chapter_5/c_5_2_noise_grid.jpg" width="303">
 
@@ -140,7 +140,7 @@ void drawPoint(float x, float y, float noiseFactor) {
 
 `noiseFactor`の値によって座標を回転させ、その状態で20ピクセルの線を描画するものに変更した。線は真横に向かって描画されるものもあれば、斜めに向かって描画される。
 
-結果として以下のような2Dパーリンノイズが描画される。
+以下のような2Dパーリンノイズが描画される。
 
 <img src="../README_resources/chapter_5/c_5_3_noise_grid.jpg" width="301">
 
@@ -197,6 +197,77 @@ void drawPoint(float x, float y, float noiseFactor) {
 
 `noiseFactor`の値を、座標の回転と円のサイズ、色、アルファ値を決めるのに利用して描画をしている。
 
-結果として以下のような2Dパーリンノイズが描画される。
+以下のような2Dパーリンノイズが描画される。
 
 <img src="../README_resources/chapter_5/c_5_4_noise_grid.jpg" width="303">
+
+# ノイズアニメーション
+
+ノイズアニメーションの描画には`draw()`関数を利用する。まずは`c_5_4_noise_grid.pde`の一部分変更をし、アニメーションを描画してみる。
+
+**c_5_5_noise_animation/c_5_5_noise_animation.pde**
+
+```processing
+float xStart, xNoise, yStart, yNoise;
+
+void setup() {
+    // 描画ウィンドウの幅と高さを指定する
+    size(300, 300);
+    // 滑らかな描画（アンチエイリアス）を有効にする
+    smooth();
+    // 背景色を指定
+    background(0);
+    // フレームレートを指定
+    frameRate(24);
+    // シード値を設定
+    xStart = random(10);
+    yNoise = random(10);
+}
+
+void draw() {
+    // 毎フレーム毎にbackgroundをクリアする
+    background(0);
+
+    // 毎フレーム毎にシード値を加算する   
+    xStart += 0.01;
+    yStart += 0.01;
+
+    xNoise = xStart;
+    yNoise = yStart;
+
+    for (int y = 0; y <= height; y += 5) {
+        // シード値に0.1を加算
+        yNoise += 0.1;
+        // 各列の開始時点でxNoiseをリセット
+        xNoise = xStart;
+        for (int x = 0; x <= width; x += 5) {
+            // シード値に0.1を加算
+            xNoise += 0.1;
+            drawPoint(x, y, noise(xNoise, yNoise));
+        }   
+    }
+}
+
+void drawPoint(float x, float y, float noiseFactor) {
+    // 現在の座標を保存する
+    pushMatrix();
+    // 座標（描画位置）の移動
+    translate(x, y);
+    // 座標を回転する
+    rotate(noiseFactor * radians(540));
+    float edgeSize = noiseFactor * 35;
+    float grey = 150 + (noiseFactor * 120);
+    float alph = 150 + (noiseFactor * 120);
+    noStroke();
+    fill(grey, alph);
+    ellipse(0, 0, edgeSize, edgeSize / 2);
+    // 保存した座標をとりだす
+    popMatrix();
+}
+```
+
+毎フレーム毎にシード値を加算するようにしたため、雲が左上に漂っていくようなアニメーションになる。
+
+以下のようなノイズアニメーションが描画される。
+
+<img src="../README_resources/chapter_5/c_5_5_noise_animation.gif" width="301">
