@@ -348,3 +348,17 @@ void drawPoint(float x, float y, float noiseFactor) {
 以下のようなノイズアニメーションが描画される。
 
 <img src="../README_resources/chapter_5/c_5_6_noise_animation.gif" width="301">
+
+# 3次元
+3次元を描画するためには`size`関数の3番目の引数を指定する必要がある。
+
+```processing
+size(幅, 高さ, MODE);
+```
+
+`MODE`と呼ばれる引数であり、どのレンダリングエンジンを利用するか指定するもの。
+
+## 3次元空間に描く
+3次元を描画するためには、2次元平面にz（上下どれぐらいの距離があるのか指定する値）という位置情報を追加する必要がある。
+
+Processingには3D構造を表現するために、多くの組み込み関数が存在するため、まずはそれあを利用してみる。まずは`sphere`を利用する。
