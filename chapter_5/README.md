@@ -384,4 +384,28 @@ void draw() {
 
 以下のような3Dの球体が描画される
 
-<img src="../README_resources/chapter_5/c_5_7_3d_sphere.jpg" width="500">
+<img src="../README_resources/chapter_5/c_5_7_3d_sphere.jpg" width="504">
+
+### `translate`を変更し、見え方の違いを確認する
+
+上記のコードだと2Dの円とあまり変わりがないように見えるため、`translate`の3つめの引数を変更してみる。
+
+上記のコードで`translate`を以下のように変更すれば
+
+```
+translate(width/2, height/2, -50);
+```
+
+球体が遠ざかったように見えるような描画がされる。
+
+<img src="../README_resources/chapter_5/c_5_7_3d_sphere_2.jpg" width="503">
+
+また、`translate`を以下のように変更すれば
+
+```
+translate(width/2, height/2, 150);
+```
+
+球体の中にいるような描画がされる。
+
+<img src="../README_resources/chapter_5/c_5_7_3d_sphere_3.jpg" width="503">
