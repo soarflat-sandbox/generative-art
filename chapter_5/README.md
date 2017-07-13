@@ -361,4 +361,27 @@ size(幅, 高さ, MODE);
 ## 3次元空間に描く
 3次元を描画するためには、2次元平面にz（上下どれぐらいの距離があるのか指定する値）という位置情報を追加する必要がある。
 
-Processingには3D構造を表現するために、多くの組み込み関数が存在するため、まずはそれあを利用してみる。まずは`sphere`を利用する。
+Processingには3D構造を表現するために、多くの組み込み関数が存在するため、まずはそれらを利用してみる。まずは`sphere`（三角関数を利用して球体を描画する関数）を利用し`translate`で座標の位置を移動して描画する。
+
+```processing
+// OpenGLのライブラリのインポートする
+import processing.opengl.*;
+
+void setup() {
+    // レンダリングエンジンにOPENGLを指定
+    size(500, 300, OPENGL);
+    // どれぐらいの細かさで円を描画するか指定
+    // (360/40) = 9 のため9度毎に頂点を作る。
+    sphereDetail(40);
+}
+
+void draw() {
+    background(255);
+    translate(width/2, height/2, 50);
+    sphere(100);
+}
+```
+
+以下のような3Dの球体が描画される
+
+<img src="../README_resources/chapter_5/c_5_7_3d_sphere.jpg" width="500">
